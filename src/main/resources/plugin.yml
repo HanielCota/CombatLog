@@ -1,3 +1,3 @@
 name: CombatLogPlugin
-main: com.ankares.combatlog.CombatLogPlugin
+main: com.github.hanielcota.combatlog.CombatLogPlugin
 version: 1.0
