@@ -1,25 +1,63 @@
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // Specify the exact version of the Shadow plugin
 }
 
-group 'com.ankares.combatlog'
-version '1.0-SNAPSHOT'
+// Set project information
+group = 'com.github.hanielfialho'
+version = '1.0-SNAPSHOT'
+
+// Configure build tasks
 tasks.build.dependsOn 'shadowJar'
 
+// Configure repositories for dependency resolution
 repositories {
-    mavenCentral()
+    mavenCentral().content { includeGroupByRegex '.*' }
+    // Specify repository version and include only necessary artifacts
+    maven { url = "https://repo.aikar.co/content/groups/aikar/" }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+
 }
+
+// Define dependencies
 dependencies {
+    //dependencies for minecraft
     compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+
+    //cache framework
+    implementation("com.github.ben-manes.caffeine:caffeine:3.1.6")
+
+    //commands framework
+    implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
+
+    //LuckPerms API
+    compileOnly 'net.luckperms:api:5.4'
+
+    //Database MySQL HikariCP
+    implementation("com.zaxxer:HikariCP:4.0.3")
+
+    //guice
+    implementation 'com.google.inject:guice:7.0.0'
+
+    //annotations processor
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
 }
 
+// Configure Java compilation
 compileJava {
-    compileJava.options.encoding = "UTF-8"
+    options.encoding = "UTF-8"
+    sourceCompatibility = 1.8
 }
 
+// Configure Shadow JAR task
+shadowJar {
+    relocate 'co.aikar.commands', 'com.github.hanielcota.destiny.commands'
+    relocate 'co.aikar.locales', 'com.github.hanielcota.destiny.locales'
+}
+
+// Process resources
 processResources {
     def props = [version: version]
     inputs.properties props
