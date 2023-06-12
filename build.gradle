@@ -41,8 +41,8 @@ dependencies {
     implementation 'com.google.inject:guice:7.0.0'
 
     //annotations processor
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    compileOnly 'org.projectlombok:lombok:1.18.28'
 }
 
 // Configure Java compilation
